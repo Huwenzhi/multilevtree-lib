@@ -56,7 +56,8 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
      * 展开与关闭的图片
      */
     private int iconExpand = -1, iconNoExpand = -1;
-
+    //查询字段
+    public String keyword ;
     public void setOnTreeNodeClickListener(
             OnTreeNodeClickListener onTreeNodeClickListener) {
         this.onTreeNodeClickListener = onTreeNodeClickListener;
@@ -382,8 +383,6 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
                 setNodeParentChecked(node.getParent(), checked);
         }
     }
-
-    String keyword = "";
 
     public void filter(String keyword) {
         this.keyword = keyword;

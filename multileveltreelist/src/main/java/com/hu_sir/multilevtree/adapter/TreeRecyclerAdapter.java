@@ -51,7 +51,8 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
     /** 展开与关闭的图片*/
     private int iconExpand = -1,iconNoExpand = -1;
-
+    //查询字段
+   public String keyword ;
     public void setOnTreeNodeClickListener(
             OnTreeNodeClickListener onTreeNodeClickListener) {
         this.onTreeNodeClickListener = onTreeNodeClickListener;
@@ -352,7 +353,7 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    String keyword = "";
+
 
     public void filter(String keyword) {
         this.keyword = keyword;
