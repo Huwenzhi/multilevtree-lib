@@ -392,6 +392,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             closeAll();
         }
 //        addDataAll(mAllNodes, 0);
+
         addData(mAllNodes,0);
     }
 
