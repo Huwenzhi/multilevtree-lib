@@ -391,7 +391,8 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         } else {
             closeAll();
         }
-        addDataAll(mAllNodes, 0);
+//        addDataAll(mAllNodes, 0);
+        addData(mAllNodes,0);
     }
 
     //关闭所有的条目
