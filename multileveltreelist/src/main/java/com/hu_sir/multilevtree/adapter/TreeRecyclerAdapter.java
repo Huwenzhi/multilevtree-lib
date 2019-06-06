@@ -2,6 +2,8 @@ package com.hu_sir.multilevtree.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-  * Copyright (C), 2015-2019/6/5,
-  * @ProjectName:    TreeRecyclerAdapter.java
-  * @Package:        com.hu_sir.multilevtree.adapter
-  * @ClassName:      TreeRecyclerAdapter
-  * @Description:     TODO
-  * @Author:          Hu_Sir
-  * @CreateDate:     2019/6/5--16:26
-  * @UpdateUser:     ?
-  * @UpdateDate:     2019/6/5--16:26
-  * @UpdateRemark:   todo
-  *
+ * Copyright (C), 2015-2019/6/5,
+ * @ProjectName:    TreeRecyclerAdapter.java
+ * @Package:        com.hu_sir.multilevtree.adapter
+ * @ClassName:      TreeRecyclerAdapter
+ * @Description:     TODO
+ * @Author:          Hu_Sir
+ * @CreateDate:     2019/6/5--16:26
+ * @UpdateUser:     ?
+ * @UpdateDate:     2019/6/5--16:26
+ * @UpdateRemark:   todo
+ *
  */
 public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -52,7 +54,7 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     /** 展开与关闭的图片*/
     private int iconExpand = -1,iconNoExpand = -1;
     //查询字段
-   public String keyword ;
+    public String keyword ;
     public void setOnTreeNodeClickListener(
             OnTreeNodeClickListener onTreeNodeClickListener) {
         this.onTreeNodeClickListener = onTreeNodeClickListener;
@@ -354,7 +356,10 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
 
-
+    /**
+     * 模糊查询
+     * @param keyword
+     */
     public void filter(String keyword) {
         this.keyword = keyword;
         if (!TextUtils.isEmpty(keyword)) {
@@ -362,7 +367,12 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         } else {
             closeAll();
         }
-        addDataAll(mAllNodes, 0);
+        /**
+         * 过滤出可见的Node
+         */
+        mNodes = TreeHelper.filterVisibleNode(mAllNodes);
+        //刷新数据
+        notifyDataSetChanged();
     }
 
     //关闭所有的条目
@@ -376,7 +386,10 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     private void openContans() {
         for (Node node : mAllNodes) {
             if (node.getName().contains(keyword)) {
-                node.setExpand(true);
+                // 判断叶子节点
+                if (node.isLeaf()) {
+                    node.setExpand(true);
+                }
                 forNode(node);
             }
         }
@@ -388,6 +401,21 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         if (nodep != null) {
             nodep.setExpand(true);
             forNode(nodep);
+        }
+    }
+
+    public CharSequence searchText(String name) {
+        //如果存在搜索关键字
+        if (keyword != null && !"".equals(keyword) && name.contains(keyword)) {
+            int index = name.indexOf(keyword);
+            int len = keyword.length();
+            Spanned temp = Html.fromHtml(name.substring(0, index)
+                    + "<font color=#FF0000>"
+                    + name.substring(index, index + len) + "</font>"
+                    + name.substring(index + len, name.length()));
+            return temp;
+        } else {
+            return name;
         }
     }
 

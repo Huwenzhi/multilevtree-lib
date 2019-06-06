@@ -1,6 +1,8 @@
 package com.hu_sir.multilevtree.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +59,8 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
      */
     private int iconExpand = -1, iconNoExpand = -1;
     //查询字段
-    public String keyword ;
+    public String keyword;
+
     public void setOnTreeNodeClickListener(
             OnTreeNodeClickListener onTreeNodeClickListener) {
         this.onTreeNodeClickListener = onTreeNodeClickListener;
@@ -391,9 +394,13 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         } else {
             closeAll();
         }
-//        addDataAll(mAllNodes, 0);
+        /**
+         * 过滤出可见的Node
+         */
+        mNodes = TreeHelper.filterVisibleNode(mAllNodes);
+        //刷新数据
+        notifyDataSetChanged();
 
-        addData(mAllNodes,0);
     }
 
     //关闭所有的条目
@@ -407,7 +414,9 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     private void openContans() {
         for (Node node : mAllNodes) {
             if (node.getName().contains(keyword)) {
-                node.setExpand(true);
+                if (node.isLeaf()) {
+                    node.setExpand(true);
+                }
                 forNode(node);
             }
         }
@@ -421,7 +430,20 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             forNode(nodep);
         }
     }
-
+    public CharSequence searchText(String name) {
+        //如果存在搜索关键字
+        if (keyword != null && !"".equals(keyword) && name.contains(keyword)) {
+            int index = name.indexOf(keyword);
+            int len = keyword.length();
+            Spanned temp = Html.fromHtml(name.substring(0, index)
+                    + "<font color=#FF0000>"
+                    + name.substring(index, index + len) + "</font>"
+                    + name.substring(index + len, name.length()));
+            return temp;
+        } else {
+            return name;
+        }
+    }
     public abstract View getConvertView(Node node, int position,
                                         View convertView, ViewGroup parent);
 }
