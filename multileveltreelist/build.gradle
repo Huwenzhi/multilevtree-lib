@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.github.dcendents.android-maven'
-//group='com.github.Huwenzhi'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.Huwenzhi'
 //这个地方改成自己的名字
 android {
     compileSdkVersion 28
