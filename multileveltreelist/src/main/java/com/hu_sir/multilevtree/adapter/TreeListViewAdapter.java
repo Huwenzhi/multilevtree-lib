@@ -387,7 +387,8 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         }
     }
 
-    /**模糊查找
+    /**
+     * 模糊查找
      *
      * @param keyword
      */
@@ -408,10 +409,11 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     }
 
 
-    /**模糊查找
+    /**
+     * 模糊查找
      *
      * @param keyword 要搜索的字段
-     *  是否显示不匹配的项
+     *                是否显示不匹配的项
      */
     public void filterShowOther(String keyword) {
         this.keyword = keyword;
@@ -432,9 +434,16 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     //关闭所有的条目
     private void closeAll() {
         for (Node node : mAllNodes) {
-            node.setExpand(false);
+            if (node.getParent()==null||TextUtils.isEmpty(String.valueOf(node.getpId())) || TextUtils.equals(String.valueOf(node.getpId()), "-1")) {
+                node.setExpand(true);
+                node.setShow(true);
+            } else {
+                node.setExpand(false);
+
+            }
         }
     }
+
     //展开包含的
     private void openContans() {
         for (Node node : mAllNodes) {
@@ -456,11 +465,12 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
                 }
                 node.setShow(true);
                 forNodeshowOther(node);
-            }else {
+            } else {
                 node.setShow(false);
             }
         }
     }
+
     //递归其父实现向上展开
     private void forNodeshowOther(Node node) {
         Node nodep = node.getParent();

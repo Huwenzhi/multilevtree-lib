@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40"
+    android:padding="@dimen/dp_5"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_marginLeft="@dimen/dp_5"
+        android:id="@+id/icon"
+        android:src="@mipmap/icon_open"
+        android:layout_width="@dimen/dp_26"
+        android:layout_height="@dimen/dp_26"
+        android:scaleType="centerCrop"/>
+
+
+
+    <TextView
+        tools:text="树数据展示"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:id="@+id/id_treenode_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="@dimen/sp_22"/>
+
+</LinearLayout>
