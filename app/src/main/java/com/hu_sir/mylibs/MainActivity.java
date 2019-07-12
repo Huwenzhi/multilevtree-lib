@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mDatas = new ArrayList<Node>();
         BackBean backBean=new Gson().fromJson(json,BackBean.class);
         sendDatas(backBean.getBackLists());
-        myTreeAdapter=new MyTreeAdapter(mMyListview,this,mDatas,3,R.mipmap.icon_open,R.mipmap.icon_close);
+        myTreeAdapter=new MyTreeAdapter(mMyListview,this,mDatas,1,R.mipmap.icon_open,R.mipmap.icon_close);
         mMyListview.setAdapter(myTreeAdapter);
 
     }

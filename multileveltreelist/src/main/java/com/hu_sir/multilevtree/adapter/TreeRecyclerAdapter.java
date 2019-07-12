@@ -424,7 +424,7 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         for (Node node : mAllNodes) {
             if (node.getLevel() <= defaultExpandLevel && defaultExpandLevel >= 1) {
                 node.setShow(true);
-                node.setExpand(true);
+                node.setExpand(node.getLevel()==defaultExpandLevel?false:true);
             } else {
                 if (node.getParent() == null || TextUtils.isEmpty(String.valueOf(node.getpId())) || TextUtils.equals(String.valueOf(node.getpId()), "-1")) {
                     node.setShow(true);
