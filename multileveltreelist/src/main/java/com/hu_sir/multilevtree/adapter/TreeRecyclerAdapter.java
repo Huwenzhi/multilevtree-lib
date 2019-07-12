@@ -422,12 +422,16 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     //关闭所有的条目
     private void closeAll() {
         for (Node node : mAllNodes) {
-            if (node.getParent()==null||TextUtils.isEmpty(String.valueOf(node.getpId())) || TextUtils.equals(String.valueOf(node.getpId()), "-1")) {
-                node.setExpand(true);
+            if (node.getLevel() <= defaultExpandLevel && defaultExpandLevel >= 1) {
                 node.setShow(true);
+                node.setExpand(true);
             } else {
+                if (node.getParent() == null || TextUtils.isEmpty(String.valueOf(node.getpId())) || TextUtils.equals(String.valueOf(node.getpId()), "-1")) {
+                    node.setShow(true);
+                } else {
+                    node.setShow(false);
+                }
                 node.setExpand(false);
-
             }
         }
     }
