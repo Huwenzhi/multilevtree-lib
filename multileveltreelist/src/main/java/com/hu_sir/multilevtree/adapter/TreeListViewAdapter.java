@@ -432,7 +432,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     }
 
     //关闭所有的条目
-    private void closeAll() {
+    public void closeAll() {
         for (Node node : mAllNodes) {
             if (node.getLevel() <= defaultExpandLevel && defaultExpandLevel >= 1) {
                 node.setShow(true);
